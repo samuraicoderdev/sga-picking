@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Hono } from 'hono';
 import { getPendingOrders, products } from '../db.js';
 import { getOrdersSnapshot } from '../services/picking.js';
 import type { DashboardStats } from '../types.js';
 
-export const dashboardRouter = Router();
+export const dashboardRouter = new Hono();
 
-dashboardRouter.get('/stats', (_req, res) => {
+dashboardRouter.get('/stats', (c) => {
   const allOrders = getOrdersSnapshot();
   const pendingOrders = getPendingOrders();
   const lowStockProducts = products.filter((p) => p.stock < 20);
@@ -19,5 +19,5 @@ dashboardRouter.get('/stats', (_req, res) => {
     recentOrders: allOrders.slice(0, 4),
   };
 
-  res.json(stats);
+  return c.json(stats);
 });
