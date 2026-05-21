@@ -1,15 +1,15 @@
 export interface Product {
-  id: string; // Barcode
+  id: string | number; // Barcode
   name: string;
   sku: string;
   stock: number;
   location: string;
-  price: number;
+  price?: number;
   category: string;
 }
 
 export interface Customer {
-  id: string;
+  id: string | number;
   name: string;
   company: string;
   email: string;
@@ -18,13 +18,13 @@ export interface Customer {
 }
 
 export interface OrderItem {
-  productId: string;
+  productId: string | number;
   quantity: number;
   picked: number;
 }
 
 export interface Order {
-  id: string;
+  id: string | number;
   customerId: string;
   status: 'Pendiente' | 'Picking' | 'Completado' | 'Enviado';
   items: OrderItem[];
