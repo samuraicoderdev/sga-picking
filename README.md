@@ -1,93 +1,103 @@
-# SGA Picking App with AI
+# Smart SGA & CRM - Documentación Técnica y Configuración Local
 
+Si el proyecto se ve "desmaquetado" o sin estilos en tu entorno local, casi con total seguridad se debe a la **configuración de Tailwind CSS v4**. En esta reciénten entrega, Tailwind funciona a través de un plugin nativo de Vite, lo cual hace que la instalación tradicional con `tailwind.config.js` y `postcss` ya no sea necesaria, pero requiere que `vite.config.ts` y `index.css` estén configurados de una forma específica.
 
+A continuación, te detallo todo lo necesario para que lo repliques de forma exacta.
 
-## Getting started
+## 1. Dependencias Principales Usadas
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- **React 19** (`react`, `react-dom`): Librería base para la interfaz.
+- **Vite 6** (`vite`, `@vitejs/plugin-react`): Empaquetador y entorno de desarrollo (rápido y moderno).
+- **Tailwind CSS v4** (`tailwindcss`, `@tailwindcss/vite`): Framework de estilos utility-first. En su versión 4 funciona mediante un plugin de Vite en lugar de PostCSS.
+- **Lucide React** (`lucide-react`): Toda la iconografía de la aplicación.
+- **Motion** (`motion`): Usada para las animaciones fluidas (el nuevo nombre/paquete de Framer Motion).
+- **HTML5-QRCode** (`html5-qrcode`): Librería para activar la cámara del móvil y escanear códigos de barras.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## 2. Archivo `package.json`
 
-## Add your files
+Asegúrate de copiar este contenido en tu `package.json` y luego ejecutar `npm install` (o `npm ci`):
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
-
+```json
+{
+  "name": "smart-sga-crm",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "html5-qrcode": "^2.3.8",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^5.0.4",
+    "tailwindcss": "^4.1.14",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.3"
+  }
+}
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/samuraikatana/picking-app-with-ai.git
-git branch -M main
-git push -uf origin main
+
+## 3. Archivo `vite.config.ts` (CLAVE PARA LOS ESTILOS)
+
+Para que Tailwind v4 procese correctamente los estilos, debes importar y declarar su plugin en la configuración de Vite. De lo contrario, *no compilará ninguna clase CSS* y se verá totalmente desmaquetado.
+
+```typescript
+import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  plugins: [
+    react(), 
+    tailwindcss() // <-- Esto inyecta Tailwind v4
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '.'),
+    },
+  },
+});
 ```
 
-## Integrate with your tools
+## 4. Archivo `src/index.css` (CLAVE PARA TAILWIND)
 
-* [Set up project integrations](https://gitlab.com/samuraikatana/picking-app-with-ai/-/settings/integrations)
+En Tailwind v4, ya no usas las directivas `@tailwind base;` etc. Solo necesitas importar Tailwind directamente:
 
-## Collaborate with your team
+```css
+@import "tailwindcss";
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+/* Opcional: tus estilos extra aquí */
+```
 
-## Test and Deploy
+## 5. Estructura de Componentes
 
-Use the built-in continuous integration in GitLab.
+La aplicación está modularizada en los siguientes componentes clave en `/src`:
+- `/src/App.tsx`: Enrutador principal y layout general con el Sidebar.
+- `/src/types.ts`: Declaración estricta de las interfaces de TypeScript (Product, Order, Customer, etc.).
+- `/src/lib/data.ts`: Base de datos simulada (Mock) con los datos del inventario y clientes.
+- `/src/components/Sidebar.tsx`: Componente de navegación izquierdo.
+- `/src/views/Dashboard.tsx`: Vista de resumen (KPIs).
+- `/src/views/Inventory.tsx`: Listado de stock de almacén simulado.
+- `/src/views/Picking.tsx`: Funcionalidad de escáner y preparación de paquetes (Single, Batch, Zona, Wave).
+- `/src/views/CRM.tsx`: Base de datos simulada de clientes y status.
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+## Solución rápida para el problema de "Desmaquetado"
 
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+1. Borra tu carpeta `node_modules` y el archivo `package-lock.json`.
+2. Actualiza tu `package.json` con el de arriba.
+3. Actualiza el `vite.config.ts`.
+4. Asegúrate que en `src/main.tsx` (o tu punto de entrada) estés importando `import './index.css';`.
+5. Revisa que `src/index.css` tenga `@import "tailwindcss";`.
+6. Corre en la terminal: `npm install` seguido de `npm run dev`.
