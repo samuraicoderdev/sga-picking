@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Search, Filter, Plus, Box, ArrowUpDown } from 'lucide-react';
-import { api } from '../lib/api';
+import { api } from '../api/api';
 import type { Product } from '../types';
 
 export function Inventory() {

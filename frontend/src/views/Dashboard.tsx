@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Package, TrendingUp, AlertTriangle, CheckCircle2 } from 'lucide-react';
-import { api, type DashboardStats } from '../lib/api';
+import { api, type DashboardStats } from '../api/api';
 
 export function Dashboard() {
   const [stats, setStats] = useState<DashboardStats | null>(null);

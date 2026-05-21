@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ScanBarcode, CheckCircle2, ChevronRight, PackageCheck, AlertCircle, Camera, Keyboard, Layers, Map, CalendarClock, Box } from 'lucide-react';
-import { api, type PickingMode, type PickingTask } from '../lib/api';
+import { api, type PickingMode, type PickingTask } from '../api/api';
 import type { Product } from '../types';
 import { Html5Qrcode } from 'html5-qrcode';
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Search, Mail, Phone, Building2, MoreVertical, Plus } from 'lucide-react';
-import { api } from '../lib/api';
+import { api } from '../api/api';
 import type { Customer } from '../types';
 
 export function CRM() {
