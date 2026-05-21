@@ -1,51 +1,102 @@
-@import "tailwindcss";
-
-
+/** Properties Base de la aplicación */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --accent-100: hsla(215, 95%, 90%);
+  --accent-200: hsla(215, 95%, 80%);
+  --accent-300: hsla(215, 95%, 70%);
+  --accent-400: hsla(215, 95%, 60%);
+  --accent-500: hsla(215, 95%, 50%);
+  --accent-600: hsla(215, 95%, 40%);
+  --accent-700: hsla(215, 95%, 30%);
+  --accent-800: hsla(215, 95%, 20%);
+  --accent-900: hsla(215, 95%, 10%);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  /* Typographies */
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --serif: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Font sizes */
+  --font-size-base: 10px;
+  --font-size-xs: 1rem;
+  --font-size-sm: 1.25rem;
+  --font-size-md: 1.5rem;
+  --font-size-lg: 1.75rem;
+  --font-size-xl: 2rem;
+  --font-size-2xl: 2.25rem;
+  --font-size-3xl: 2.5rem;
+  --font-size-4xl: 2.75rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.25rem;
+  --font-size-7xl: 3.5rem;
+  --font-size-8xl: 3.75rem;
+  --font-size-9xl: 4rem;
+  --font-size-10xl: 4.25rem;
+  --font-size-11xl: 4.5rem;
+  --font-size-12xl: 4.75rem;
+  --font-size-13xl: 5rem;
+  --font-size-14xl: 5.25rem;
+  --font-size-15xl: 5.5rem;
+  --font-size-16xl: 5.75rem;
+  --font-size-17xl: 6rem;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/** Estilos base de la aplicación */
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  color-scheme: light dark;
+  font-synthesis: none;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+
+  height: 100%;
+
+  @media (min-width > var(--breakpoint-lg)) {
+    font-size: 1.6rem;
+  }
+
+  @media (min-width > var(--breakpoint-md)) {
+    font-size: 1.44rem;
+  }
+
+  @media (min-width > var(--breakpoint-sm)) {
+    font-size: 1.25rem;
+  }
+
+  @media (min-width > var(--breakpoint-xs)) {
+    font-size: 1.125rem;
   }
 }
 
+/** Estilos para el modo oscuro */
 @media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+    background-color: var(--accent-700);
+    color: white;
+  }
+
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
+    --text: hsl(218, 11%, 65%);
+    --text-h: hsl(220, 14%, 96%);
+    --bg: hsl(231, 14%, 10%);
+    --border: hsl(230, 12%, 20%);
+    --code-bg: hsl(231, 14%, 10%);
+    --accent: hsl(280, 80%, 60%);
+    --accent-bg: hsla(270, 95%, 75%, 0.15);
+    --accent-border: hsla(270, 95%, 75%, 0.5);
+    --social-bg: hsla(235, 10%, 21%, 0.5);
     --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+      hsla(0, 0%, 0%, 0.4) 0 10px 15px -3px,
+      hsla(0, 0%, 0%, 0.25) 0 4px 6px -2px;
   }
 
   #social .button-icon {
@@ -53,27 +104,33 @@
   }
 }
 
+/** Estilos para el contenedor principal */
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
+  width: var(--breakpoint-2xl);
+  max-width: 100dvw;
+  margin-block: 0;
+  margin-inline: auto;
   text-align: center;
   border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
+/** Estilos para el cuerpo de la aplicación */
 body {
   margin: 0;
+  padding: 0;
+  padding: inherit;
+  min-height: 100dvh;
+  color: var(--text, --bg);
 }
 
 h1,
 h2 {
-  font-family: var(--heading);
+  font-family: var(--font-size-2xl);
   font-weight: 500;
-  color: var(--text-h);
+  color: hsl(225, 85%, 65%);
 }
 
 h1 {
@@ -86,16 +143,19 @@ h1 {
   }
 }
 h2 {
-  font-size: 24px;
+  font-size: 2.4rem;
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
   @media (max-width: 1024px) {
-    font-size: 20px;
+    font-size: 2rem;
   }
 }
+
 p {
   margin: 0;
+  text-align: left;
+  text-wrap: pretty;
 }
 
 code,
@@ -112,3 +172,6 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/** Tailwind CSS */
+@import "tailwindcss";
