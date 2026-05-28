@@ -1,0 +1,65 @@
+{
+  "name": "Shift",
+  "type": "object",
+  "properties": {
+    "worker_name": {
+      "type": "string",
+      "title": "Nombre del Operario"
+    },
+    "zone": {
+      "type": "string",
+      "title": "Zona Asignada",
+      "enum": [
+        "Zona A - Electr\u00f3nica",
+        "Zona B - Herramientas",
+        "Zona C - Ropa",
+        "Zona D - Qu\u00edmicos",
+        "Zona E - Recepci\u00f3n",
+        "Zona F - Despacho"
+      ]
+    },
+    "shift": {
+      "type": "string",
+      "title": "Turno",
+      "enum": [
+        "Ma\u00f1ana (06:00-14:00)",
+        "Tarde (14:00-22:00)",
+        "Noche (22:00-06:00)"
+      ]
+    },
+    "day": {
+      "type": "string",
+      "title": "D\u00eda",
+      "enum": [
+        "Lunes",
+        "Martes",
+        "Mi\u00e9rcoles",
+        "Jueves",
+        "Viernes",
+        "S\u00e1bado",
+        "Domingo"
+      ]
+    },
+    "role": {
+      "type": "string",
+      "title": "Rol",
+      "enum": [
+        "Picker",
+        "Supervisor",
+        "Recepci\u00f3n",
+        "Despacho"
+      ],
+      "default": "Picker"
+    },
+    "voice_device_id": {
+      "type": "string",
+      "title": "ID Dispositivo Voice"
+    }
+  },
+  "required": [
+    "worker_name",
+    "zone",
+    "shift",
+    "day"
+  ]
+}

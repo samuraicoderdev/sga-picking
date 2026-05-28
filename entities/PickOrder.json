@@ -1,0 +1,123 @@
+{
+  "name": "PickOrder",
+  "type": "object",
+  "properties": {
+    "order_number": {
+      "type": "string",
+      "title": "N\u00famero de Orden"
+    },
+    "status": {
+      "type": "string",
+      "title": "Estado",
+      "enum": [
+        "Pendiente",
+        "En Proceso",
+        "Completada",
+        "Cancelada"
+      ],
+      "default": "Pendiente"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Prioridad",
+      "enum": [
+        "Baja",
+        "Media",
+        "Alta",
+        "Urgente"
+      ],
+      "default": "Media"
+    },
+    "assigned_to": {
+      "type": "string",
+      "title": "Asignado a"
+    },
+    "client_name": {
+      "type": "string",
+      "title": "Cliente"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notas"
+    },
+    "items": {
+      "type": "array",
+      "title": "Items",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "quantity_requested": {
+            "type": "number"
+          },
+          "quantity_picked": {
+            "type": "number",
+            "default": 0
+          },
+          "picked": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    },
+    "completed_date": {
+      "type": "string",
+      "title": "Fecha de Completado"
+    }
+  },
+  "required": [
+    "order_number",
+    "status",
+    "items"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "data.assigned_to": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "data.assigned_to": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "name": "Route",
+  "type": "object",
+  "properties": {
+    "route_number": {
+      "type": "string",
+      "title": "N\u00famero de Ruta"
+    },
+    "name": {
+      "type": "string",
+      "title": "Nombre de Ruta"
+    },
+    "zones": {
+      "type": "array",
+      "title": "Zonas en Orden",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assigned_picker": {
+      "type": "string",
+      "title": "Picker Asignado"
+    },
+    "shift": {
+      "type": "string",
+      "title": "Turno",
+      "enum": [
+        "Ma\u00f1ana (06:00-14:00)",
+        "Tarde (14:00-22:00)",
+        "Noche (22:00-06:00)"
+      ]
+    },
+    "estimated_minutes": {
+      "type": "number",
+      "title": "Tiempo Estimado (min)"
+    },
+    "status": {
+      "type": "string",
+      "title": "Estado",
+      "enum": [
+        "Pendiente",
+        "En Curso",
+        "Completada"
+      ],
+      "default": "Pendiente"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Prioridad",
+      "enum": [
+        "Normal",
+        "Alta",
+        "Urgente"
+      ],
+      "default": "Normal"
+    }
+  },
+  "required": [
+    "route_number",
+    "name",
+    "zones"
+  ]
+}
